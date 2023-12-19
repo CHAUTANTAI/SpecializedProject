@@ -5,6 +5,7 @@ import HomeScreen from './HomeScreen';
 import About from './About';
 import PronounceScreen from './PronounceScreen'; 
 import SearchScreen from './SearchScreen';
+import StackHomeScreen from './StackHomeScreen';
 //
 import { TouchableOpacity, StyleSheet, Text } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -16,7 +17,7 @@ import * as Animatable from 'react-native-animatable';
 
 //
 const TabDataArr = [
-  { route: 'Home', label: 'Home', type: Icons.FontAwesome5, activeIcon: "book", inActiveIcon: 'book', component: HomeScreen},
+  { route: 'Home', label: 'Home', type: Icons.FontAwesome5, activeIcon: "book", inActiveIcon: 'book', component: StackHomeScreen},
   { route: 'Pronounce', label: 'Pronounce', type: Icons.Fontisto, activeIcon: "open-mouth", inActiveIcon: 'open-mouth', component: PronounceScreen},
   { route: 'Search', label: 'Search', type: Icons.FontAwesome5, activeIcon: "search", inActiveIcon: 'search', component: SearchScreen},
   { route: 'About', label: 'About', type:  Icons.FontAwesome, activeIcon: "user-circle", inActiveIcon: 'user-circle', component: About}
@@ -26,7 +27,7 @@ const Tab = createBottomTabNavigator();
 
 //TabButton
 const TabButton = (props) =>{
-  const {item , onPress, accessibilityState} = props;
+  const {item , onPress, accessibilityState, navigation} = props;
 
  
   
@@ -67,7 +68,6 @@ const styles = StyleSheet.create({
 })
 export default NavigationBottom = ({navigation }) => {
     return (
-          //<NavigationContainer          >
                 <Tab.Navigator
                  screenOptions= {{
                   headerShown:false,
@@ -86,23 +86,17 @@ export default NavigationBottom = ({navigation }) => {
                       
                         return (
                           <Tab.Screen key={index} name={item.route} component={item.component}
-                        options={{
-                          tabBarColor :"#f25900",
-                          //Badge on Icon Tab
-                          tabBarBadge:"!",
-                          title:item.label,
-                          //tabBarIcon: ({color,focused}) => (
-                            //item.Icon
-                            //<Icon type={item.type} name={focused ? item.activeIcon : item.inActiveIcon} color={focused ? "#db5d14" : "#1475f5"} />
-                            // <FontAwesome5 name={"forward"} regular activeIcon style={{ color: 'black', fontSize: 30 }} />
-                          //),
-                           tabBarButton: (props) => <TabButton {...props} item={item} navigation={navigation}/>,
-                        }}
-                        />
+                          options={{
+                            tabBarColor :"#f25900",
+                            //Badge on Icon Tab
+                            tabBarBadge:"!",
+                            title:item.label,
+                            tabBarButton: (props) => <TabButton {...props} item={item} navigation={navigation}/>,
+                          }}
+                          />
                         )
                     })
                   }
                 </Tab.Navigator>
-          //</NavigationContainer>
     );
   }

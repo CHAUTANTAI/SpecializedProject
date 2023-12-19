@@ -27,34 +27,11 @@ const Item = ({item, onPress, backgroundColor, textColor}) => (
     <Text style={[styles.title, {color: textColor}]}>{item.title}</Text>
   </TouchableOpacity>
 );
-const Header = () => {
-  return (
-    <View style={styles.header}>
-      <Text>OK</Text>
-    </View>
-  )
-}
 export default HomeScreen = ({navigation} ) => {
-  navigation.options = {
-    headerRight: () => (
-      <TouchableOpacity style={{
-          backgroundColor:"#9dacc420",
-          width:100,
-          height:45,
-          borderRadius:20,
-          alignItems:"center",
-          justifyContent:"center",
-          }} 
-          onPress={() => {}}>
-          <Text style={{
-              color:"#0000FF",
-              fontStyle:"normal",
-              fontWeight:"bold",
-              fontSize:15
-              }}>OK</Text>
-      </TouchableOpacity>
-    )
-  }
+  
+
+
+  //
   const [selectedId, setSelectedId] = useState();
 
   const renderItem = ({item}) => {
@@ -63,7 +40,12 @@ export default HomeScreen = ({navigation} ) => {
     return (
       <Item
         item={item}
-        onPress={() => setSelectedId(item.id)}
+        onPress={() => {
+          setSelectedId(item.id)
+          navigation.getParent()?.setOptions({ tabBarStyle: { display: 'none' }, tabBarVisible: false });
+          console.log(item.title)
+          navigation.navigate('LessonList',{TopicName:item.title})
+        }}
         backgroundColor={backgroundColor}
         textColor={color}
       />
@@ -71,13 +53,6 @@ export default HomeScreen = ({navigation} ) => {
   }
     return (
       <View style={styles.container}>
-        {/* //Header */}
-           {/* <Appbar.Header>
-      <Appbar.Content title="Title" subtitle={'Subtitle'} />
-       <Appbar.Action icon="magnify" onPress={() => {}} />
-       <Appbar.Action  onPress={() => {}} />
-   </Appbar.Header> */}
-   {/* <Header/> */}
       <SafeAreaView style={styles.flatlist}>
       <FlatList
         data={ListTopic}
